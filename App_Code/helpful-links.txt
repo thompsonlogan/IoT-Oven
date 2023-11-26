@@ -1,0 +1,9 @@
+Helpful links
+https://developers.google.com/identity/protocols/oauth2/scopes <- google_sign_in
+https://pub.dev/packages/google_sign_in <- google_sign_in
+https://www.youtube.com/watch?v=z4MsuZiEezY&vl=en-US <- google_sign_in
+https://www.youtube.com/watch?v=Q00Foa8CiDk <- you guessed it
+https://docs.flutter.dev/development/data-and-backend/json <- Json serialization
+https://developers.google.com/identity/one-tap/android <- one tap sign-in for android
+https://www.youtube.com/watch?v=Q00Foa8CiDk <- Google SignIn w/ Flutter Tutorial for Android + iOS
+GoogleSignIn, Cloud IOT Core Api (need reference),

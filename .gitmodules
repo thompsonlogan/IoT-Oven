@@ -1,0 +1,3 @@
+[submodule "doctest"]
+	path = Embedded_Code/libraries/doctest
+	url = https://github.com/onqtam/doctest.git

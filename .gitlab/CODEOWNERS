@@ -1,0 +1,24 @@
+# Code Owners example
+# [Section name]
+# file @user1 @user2
+# dir/ @user1 @user2
+# file @user3 # Only user3 is the code owner, since they are the last entry
+
+
+# Code Owners for Cloud_Code
+[Cloud_Code Owners]
+Cloud_Code/ @mccordq @kriegv @adhuber @hueninkm @vanderzyld @PenkalskiJ @thompsonlog @cherryry @lippincottb @dvande
+
+# Code Owners for App_Code
+[App/Code Owners]
+App_Code/ @mccordq @kriegv @adhuber @hueninkm @vanderzyld @PenkalskiJ @thompsonlog @cherryry @lippincottb @dvande
+
+# Code Owners for Embedded_Code
+[Embedded_Code Owners]
+Embedded_Code/ @orleys @TimothyMFacklam @RobertBecker1 @Brian135135 @ShaneUWPLATT @wynesg @Reyb810
+Embedded\ Documents/ @orleys @TimothyMFacklam @RobertBecker1 @Brian135135 @ShaneUWPLATT @wynesg @Reyb810
+
+# Code Owners for CICD
+[CICD Owners]
+.cicd-files/ @mccordq @kriegv @adhuber @hueninkm @vanderzyld @PenkalskiJ @thompsonlog @cherryry @lippincottb @dvande
+.gitlab/ @mccordq @kriegv @adhuber @hueninkm @vanderzyld @PenkalskiJ @thompsonlog @cherryry @lippincottb @dvande

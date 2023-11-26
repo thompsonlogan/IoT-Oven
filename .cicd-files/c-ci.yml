@@ -1,0 +1,31 @@
+.c:config:
+  image: gcc
+  before_script:
+    - apt-get update --yes
+    - apt-get install --yes cmake
+    - cd Embedded_Code/src
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+  rules:
+    - changes:
+        - Embedded_Code/**/*
+
+# Build and Test disabled until there is a valid build path
+#build:
+#  extends: .c:config
+#  stage: build
+#  script:
+#    - cmake .. -B ./build
+#    - cmake --build ./build
+#  artifacts:
+#    paths:
+#      - CICD_Test/C_Code/src/build/*
+#
+#test:
+#  extends: .c:config
+#  dependencies:
+#    - build
+#  stage: test
+#  script:
+#    - cd build
+#    - ctest ..

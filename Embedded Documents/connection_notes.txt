@@ -1,0 +1,18 @@
+**********************************************************************
+* A reference for how connections are set up
+*
+*
+**********************************************************************
+* Nuvoton Board
+* Overhead view is the pin number that is viewed from the top of the 
+* board. Port number is shown in the Bspconfig.c
+**********************************************************************
+		OVERHEAD VIEW		PORT 
+UART0 RX ->	     28 		0.2 
+UART0 TX ->	     27			0.3
+
+UART1 RX ->	     56			3.0
+UART1 TX ->	     55			3.1
+
+//Note//
+UART0 is currently being used for the command parser

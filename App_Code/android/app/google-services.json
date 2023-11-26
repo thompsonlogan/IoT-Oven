@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "722831468219",
+    "project_id": "spectrum-brands-main-project",
+    "storage_bucket": "spectrum-brands-main-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:722831468219:android:e19ba6ee515fd8e967ab9e",
+        "android_client_info": {
+          "package_name": "com.example.spectrum_mobile_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "722831468219-mj4ci09sffabh1hligifnp21eem0v6a6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.spectrum_mobile_app",
+            "certificate_hash": "471e75ed2ae70ef321575d875bf13364d4260764"
+          }
+        },
+        {
+          "client_id": "722831468219-k0ocs55nm30qf8kdqt3fjvb4cbjcf9ng.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiSwF3tP4RAaTvR41o788PiqKYYv7tcZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "722831468219-k0ocs55nm30qf8kdqt3fjvb4cbjcf9ng.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,139 @@
+.firebase:config:
+  image: node:16-alpine
+  before_script:
+    - cd Cloud_Code/Firebase/
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+  rules:
+    - changes:
+        - Cloud_Code/Firebase/**/*
+
+.firebase-tools:config:
+  extends: .firebase:config
+  before_script:
+    - npm i -g firebase-tools@10.7
+    - cd Cloud_Code/Firebase/
+
+# Install npm packages for functions and publish the artifacts
+build-functions:
+  extends: .firebase:config
+  stage: build
+  script:
+    - cd functions
+    - yarn install
+  artifacts:
+    paths:
+      - Cloud_Code/Firebase/functions/**/*
+  dependencies: []
+  needs: []
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event' || $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      changes:
+        - Cloud_Code/Firebase/functions/**/*
+
+# Test functions with eslint to make sure they conform to standards
+# Get artifacts from build-functions
+# Only test if merge request
+lint-functions:
+  extends: .firebase:config
+  stage: test
+  script:
+    - cd functions
+    - npm run lint
+  dependencies:
+    - "build-functions"
+  needs: ["build-functions"]
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+      changes:
+        - Cloud_Code/Firebase/functions/**/*
+
+test-functions:
+  extends: .firebase:config
+  stage: test
+  script:
+    - cd functions
+    - npm run test
+  dependencies:
+    - "build-functions"
+  needs: ["build-functions"]
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+      changes:
+        - Cloud_Code/Firebase/functions/**/*
+
+# Deploy firebase functions
+# Get artifacts from, and run after, build-functions
+deploy-functions:
+  extends: .firebase-tools:config
+  stage: deploy
+  script:
+    - firebase deploy --only functions --token "$FIREBASE_TOKEN"
+  dependencies:
+    - "build-functions"
+  needs: ["build-functions"]
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      changes:
+        - Cloud_Code/Firebase/functions/**/*
+
+#test-deployed-functions:
+#extends: .firebase:config
+#stage: deploy-test
+#script:
+#- cd functions
+#- npm run test
+#dependencies:
+#- "build-functions"
+#needs: ["build-functions", "deploy-functions"]
+#rules:
+#- if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+#changes:
+#- Cloud_Code/Firebase/functions/**/*
+
+deploy-firebase-rules:
+  extends: .firebase-tools:config
+  stage: deploy
+  script:
+    - firebase deploy --only firestore:rules --token "$FIREBASE_TOKEN"
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      changes:
+        - Cloud_Code/Firebase/firebase-config/firestore.rules
+
+# Builds the app, runs in merge request and main branch
+build-hosting:
+  extends: .firebase:config
+  stage: build
+  variables:
+    REACT_APP_FIREBASE_API_KEY: $REACT_APP_FIREBASE_API_KEY
+    REACT_APP_FIREBASE_AUTH_DOMAIN: $REACT_APP_FIREBASE_AUTH_DOMAIN
+  script:
+    - cd web
+    - npm install
+    - npm run build
+  needs: []
+  artifacts:
+    paths:
+      - Cloud_Code/Firebase/web/build/**/*
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event' || $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      changes:
+        - Cloud_Code/Firebase/web/**/*
+
+# Deploy the app, gets artifacts from build-hosting and runs after build-hosting
+deploy-hosting:
+  extends: .firebase-tools:config
+  stage: deploy
+  dependencies:
+    - "build-hosting"
+  needs: ["build-hosting"]
+  script:
+    - firebase deploy --only hosting --token "$FIREBASE_TOKEN"
+  environment:
+    name: Firebase-Hosting
+    url: $REACT_APP_FIREBASE_AUTH_DOMAIN
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      changes:
+        - Cloud_Code/Firebase/web/**/*
